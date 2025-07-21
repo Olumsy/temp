@@ -1,39 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   ft_minitalk.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: leali-ha <leali-ha@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/17 20:22:10 by leali-ha          #+#    #+#             */
-/*   Updated: 2025/07/21 14:39:58 by leali-ha         ###   ########.fr       */
+/*   Created: 2025/07/20 20:13:44 by leali-ha          #+#    #+#             */
+/*   Updated: 2025/07/21 14:17:45 by leali-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_minitalk_client.h"
+#ifndef FT_MINITALK_H
+# define FT_MINITALK_H
 
-void	write_pid()
-{
-	pid_t	server_pid;
+# include "libft/libft.h"
+# include <unistd.h>
+# include <stdlib.h>
+# include <signal.h>
 
-	server_pid = getpid();
-	write(1, &server_pid, 1);
-}
-
-void	run_server()
-{
-	struct	sigaction	sa;
-
-	sa.sa_sigaction = &sig_handler;
-	sa.sa_flags = 0;
-	write_pid();
-	while (42 == 42)
-	{
-		pause();
-	}
-}
-
-int	main()
-{
-	run_server();
-}
+typedef _Bool bool;
+# define true 1;
+# define false 0;
+#endif

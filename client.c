@@ -1,39 +1,55 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: leali-ha <leali-ha@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/17 20:22:10 by leali-ha          #+#    #+#             */
-/*   Updated: 2025/07/21 14:39:58 by leali-ha         ###   ########.fr       */
+/*   Created: 2025/07/20 21:06:29 by leali-ha          #+#    #+#             */
+/*   Updated: 2025/07/21 14:15:46 by leali-ha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_minitalk_client.h"
 
-void	write_pid()
+void	use_less(int n)
 {
-	pid_t	server_pid;
-
-	server_pid = getpid();
-	write(1, &server_pid, 1);
+	(void) n;
 }
 
-void	run_server()
+void	send_signal(char c, pid_t pid)
 {
-	struct	sigaction	sa;
+	int		count;
 
-	sa.sa_sigaction = &sig_handler;
-	sa.sa_flags = 0;
-	write_pid();
-	while (42 == 42)
+	count = 0;
+	while (count < 8)
 	{
+		if (c % 2 == 0)
+			kill(pid, SIGUSR1);
+		else
+			kill(pid, SIGUSR2);
+		c = c / 2;
+		count++;
+	}
+}
+
+void	run_client(char *str, pid_t pid)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		send_signal(str[i], pid);
+		i++;
+		signal(SIGUSR1, use_less);
 		pause();
 	}
 }
 
-int	main()
+int	main(int argc, char **argv)
 {
-	run_server();
+	if (argc != 3)
+		return (1);
+	run_client(argv[1], ft_atoi(argv[1]));
 }
