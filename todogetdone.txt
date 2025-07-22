@@ -1,0 +1,4 @@
+- Should I have two different librairies ?/
+- How do I receive signals ?
+- Two makefiles ?
+- Two handler functions ?

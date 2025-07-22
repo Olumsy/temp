@@ -14,9 +14,11 @@
 
 void	write_pid()
 {
-	pid_t	server_pid;
+	char	*server_pid;
 
-	server_pid = getpid();
+	server_pid = ft_itoa(getpid());
+	ft_putstr_fd(server_pid, 1);
+	free(server_pid);
 	write(1, &server_pid, 1);
 }
 
@@ -26,6 +28,9 @@ void	run_server()
 
 	sa.sa_sigaction = &sig_handler;
 	sa.sa_flags = 0;
+	sigemptyset(&sa.sa_mask);
+	sigaction(SIGUSR1, &sa, NULL);
+	sigaction(SIGUSR2, &sa, NULL);
 	write_pid();
 	while (42 == 42)
 	{

@@ -28,8 +28,12 @@ void	send_signal(char c, pid_t pid)
 			kill(pid, SIGUSR1);
 		else
 			kill(pid, SIGUSR2);
+		ft_putstr_fd("catch!", 1);
 		c = c / 2;
 		count++;
+		signal(SIGUSR1, use_less);
+		pause();
+		ft_putstr_fd("gotcha", 1);
 	}
 }
 
@@ -42,8 +46,6 @@ void	run_client(char *str, pid_t pid)
 	{
 		send_signal(str[i], pid);
 		i++;
-		signal(SIGUSR1, use_less);
-		pause();
 	}
 }
 
